@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/player.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/Gun/Main Gun/main gun_Gun_0.png" type="Texture" id=3]
+[ext_resource path="res://Prefabs/Gun.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
@@ -110,6 +110,4 @@ anims/Idle = SubResource( 3 )
 anims/Roll = SubResource( 5 )
 anims/Run = SubResource( 6 )
 
-[node name="Gun" type="Sprite" parent="."]
-position = Vector2( 0, -5 )
-texture = ExtResource( 3 )
+[node name="Gun" parent="." instance=ExtResource( 3 )]
