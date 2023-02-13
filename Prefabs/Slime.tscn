@@ -1,10 +1,16 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Sprites/Enemies/green_slime.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Slime.gd" type="Script" id=2]
+[ext_resource path="res://Shaders/White.tres" type="Shader" id=3]
+
+[sub_resource type="ShaderMaterial" id=7]
+resource_local_to_scene = true
+shader = ExtResource( 3 )
+shader_param/active = false
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 6.0
+radius = 4.0
 
 [sub_resource type="Animation" id=2]
 resource_name = "Death"
@@ -74,10 +80,81 @@ tracks/0/keys = {
 [sub_resource type="CircleShape2D" id=6]
 radius = 9.0
 
+[sub_resource type="Animation" id=10]
+resource_name = "BlinkOnce"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=11]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "Start"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "Stop"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="CircleShape2D" id=12]
+radius = 115.004
+
+[sub_resource type="CircleShape2D" id=13]
+radius = 7.0
+
 [node name="Slime" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 7 )
 texture = ExtResource( 1 )
 hframes = 17
 frame = 7
@@ -99,4 +176,27 @@ anims/RESET = SubResource( 5 )
 position = Vector2( -1, 1 )
 shape = SubResource( 6 )
 
+[node name="BlinkAnimation" type="AnimationPlayer" parent="."]
+anims/BlinkOnce = SubResource( 10 )
+anims/RESET = SubResource( 11 )
+anims/Start = SubResource( 8 )
+anims/Stop = SubResource( 9 )
+
+[node name="PlayerDetection" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
+shape = SubResource( 12 )
+
+[node name="SlimeHitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlimeHitbox"]
+position = Vector2( -1, 1 )
+shape = SubResource( 13 )
+
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
+[connection signal="body_entered" from="PlayerDetection" to="." method="_on_PlayerDetection_body_entered"]
+[connection signal="body_exited" from="PlayerDetection" to="." method="_on_PlayerDetection_body_exited"]

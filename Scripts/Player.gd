@@ -12,28 +12,35 @@ export var accel = 1500
 export var bulletSpeed = 1000
 export var fireRate = 0.5
 export var damage = 5
-export var health = 3
+export var maxHealth = 5
+export var health = 0
+export var invincibilityTime = 1
 
 var velocity = Vector2.ZERO
 var rollVector = Vector2.RIGHT
 var state = MOVE
 var canFire = true
+var isInvincible = false
 
 onready var animationPlayer = $AnimationPlayer
 onready var sprite = $Sprite
 onready var gun = $Gun
 onready var bulletPoint = $Gun/BulletPoint
 onready var muzzleFlash = $Gun/Flash
+onready var blinkAnimation = $BlinkAnimation
+onready var hurtbox = $PlayerHurtbox
 
 var bullet = preload("res://Prefabs/Bullet.tscn")
 
 func _ready():
-	pass
+	health = maxHealth
 	
 func _process(delta):
 	gunBehavior()
 	if Input.is_action_pressed("fire") and canFire:
 		fire()
+	if hurtbox.get_overlapping_areas().size() > 0 and !isInvincible:
+		takeDamage()
 
 func fire():
 	muzzleFlash()
@@ -100,3 +107,12 @@ func gunBehavior():
 		gun.scale.y = 1
 	elif mousePos.x < position.x:
 		gun.scale.y = -1
+
+func takeDamage():
+	health -= 1
+	print(health)
+	isInvincible = true
+	blinkAnimation.play("Start")
+	yield(get_tree().create_timer(invincibilityTime), "timeout")
+	blinkAnimation.play("Stop")	
+	isInvincible = false

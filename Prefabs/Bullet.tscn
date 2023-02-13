@@ -30,4 +30,3 @@ rotation = 1.5708
 shape = SubResource( 2 )
 
 [connection signal="area_entered" from="BulletHitbox" to="." method="_on_Hitbox_area_entered"]
-[connection signal="body_entered" from="BulletHitbox" to="." method="_on_BulletHitbox_body_entered"]
