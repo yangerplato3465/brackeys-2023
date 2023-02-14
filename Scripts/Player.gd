@@ -21,6 +21,7 @@ var rollVector = Vector2.RIGHT
 var state = MOVE
 var canFire = true
 var isInvincible = false
+var canControl = true
 
 onready var animationPlayer = $AnimationPlayer
 onready var sprite = $Sprite
@@ -34,13 +35,16 @@ var bullet = preload("res://Prefabs/Bullet.tscn")
 
 func _ready():
 	health = maxHealth
+	canControl = true
+	SignalManager.emit_signal("initHealth", health)
 	
 func _process(delta):
-	gunBehavior()
-	if Input.is_action_pressed("fire") and canFire:
-		fire()
-	if hurtbox.get_overlapping_areas().size() > 0 and !isInvincible:
-		takeDamage()
+	if canControl:
+		gunBehavior()
+		if Input.is_action_pressed("fire") and canFire:
+			fire()
+		if hurtbox.get_overlapping_areas().size() > 0 and !isInvincible:
+			takeDamage()
 
 func fire():
 	muzzleFlash()
@@ -58,12 +62,13 @@ func muzzleFlash():
 	muzzleFlash.visible = false	
 
 func _physics_process(delta):
-	match state:
-		MOVE:
-			moveState(delta)
-		
-		ROLL:
-			rollState(delta)
+	if canControl:
+		match state:
+			MOVE:
+				moveState(delta)
+			
+			ROLL:
+				rollState(delta)
 	
 func moveState(delta):
 	var inputVector = Vector2.ZERO
@@ -92,7 +97,7 @@ func moveState(delta):
 func rollState(_delta):
 	velocity = rollVector * rollSpeed
 	animationPlayer.play("Roll")
-	move()	
+	move()
 
 func roll_animation_finished():
 	state = MOVE
@@ -108,9 +113,20 @@ func gunBehavior():
 	elif mousePos.x < position.x:
 		gun.scale.y = -1
 
+func death():
+	queue_free()
+
 func takeDamage():
+	if state == ROLL:
+		return
 	health -= 1
-	print(health)
+	if health <= 0:
+		canControl = false
+		velocity = Vector2.ZERO
+		SignalManager.emit_signal("healthChange", health)
+		animationPlayer.play("Death")
+		return
+	SignalManager.emit_signal("healthChange", health)
 	isInvincible = true
 	blinkAnimation.play("Start")
 	yield(get_tree().create_timer(invincibilityTime), "timeout")
