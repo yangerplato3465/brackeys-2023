@@ -12,7 +12,7 @@ export var accel = 1500
 export var bulletSpeed = 1000
 export var fireRate = 0.5
 export var damage = 5
-export var maxHealth = 5
+export var maxHealth = 20
 export var health = 0
 export var invincibilityTime = 1
 

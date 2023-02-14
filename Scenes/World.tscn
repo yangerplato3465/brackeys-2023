@@ -6,12 +6,22 @@
 
 [node name="World" type="YSort"]
 
-[node name="HealthUI" parent="." instance=ExtResource( 3 )]
-margin_right = 8.0
-margin_bottom = 8.0
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 56, 56 )
+current = true
+smoothing_enabled = true
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 56, 56 )
 
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
+remote_path = NodePath("../../Camera2D")
+
 [node name="Sign" parent="." instance=ExtResource( 2 )]
 position = Vector2( 128, 64 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HealthUI" parent="CanvasLayer" instance=ExtResource( 3 )]
+margin_right = 8.0
+margin_bottom = 8.0
