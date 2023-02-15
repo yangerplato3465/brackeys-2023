@@ -18,3 +18,8 @@ func _on_Hitbox_area_entered(area):
 
 func setDamage(value):
 	damage = value
+
+
+func _on_BulletHitbox_body_entered(body):
+	if body.name == Consts.WALLS:
+		queue_free()

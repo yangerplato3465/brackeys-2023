@@ -15,6 +15,7 @@ export var damage = 5
 export var maxHealth = 20
 export var health = 0
 export var invincibilityTime = 1
+export var rollCD = 1
 
 var velocity = Vector2.ZERO
 var rollVector = Vector2.RIGHT
@@ -22,6 +23,7 @@ var state = MOVE
 var canFire = true
 var isInvincible = false
 var canControl = true
+var canRoll = true
 
 onready var animationPlayer = $AnimationPlayer
 onready var sprite = $Sprite
@@ -91,8 +93,11 @@ func moveState(delta):
 	
 	move()
 	
-	if Input.is_action_just_pressed("roll"):
+	if Input.is_action_just_pressed("roll") and canRoll:
 		state = ROLL
+		canRoll = false
+		yield(get_tree().create_timer(rollCD), "timeout")
+		canRoll = true
 
 func rollState(_delta):
 	velocity = rollVector * rollSpeed
@@ -132,3 +137,9 @@ func takeDamage():
 	yield(get_tree().create_timer(invincibilityTime), "timeout")
 	blinkAnimation.play("Stop")	
 	isInvincible = false
+
+
+func _on_PlayerCoinHitbox_area_entered(area):
+	if area.name == Consts.COIN_AREA:
+		PlayerStats.coinCount += 1
+		SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)

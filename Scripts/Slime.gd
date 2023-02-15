@@ -11,10 +11,13 @@ onready var blinkAnimation = $BlinkAnimation
 onready var playerDetection = $PlayerDetection
 onready var sprite = $Sprite
 
+var coin = preload("res://Prefabs/Coin.tscn")
+
 var health
 var velocity = Vector2.ZERO
 var state = CHASE
 var target = null
+var rng = RandomNumberGenerator.new()
 
 enum {
 	IDLE,
@@ -23,6 +26,7 @@ enum {
 }
 
 func _ready():
+	rng.randomize()
 	health = maxHealth
 	
 func _physics_process(delta):
@@ -55,8 +59,15 @@ func _on_HurtBox_area_entered(area):
 			animationPlayer.play("Death")
 
 func death():
+	spawnCoins()
 	queue_free()
 
+func spawnCoins():
+	var coinNum = rng.randi_range(PlayerStats.enemyMinCoinDrop, PlayerStats.enemyMaxCoinDrop)
+	for n in coinNum:
+		var coinInstance = coin.instance()
+		get_tree().get_root().add_child(coinInstance)
+		coinInstance.global_position = global_position
 
 func _on_PlayerDetection_body_entered(body):
 	if body.name == Consts.PLAYER:

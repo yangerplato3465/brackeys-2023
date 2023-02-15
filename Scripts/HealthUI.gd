@@ -2,6 +2,7 @@ extends Control
 
 onready var hearts = $Hearts
 onready var heartsEmpty = $HeartsEmpty
+onready var coinCount = $CoinCount
 
 const WIDTH = 30
 
@@ -9,6 +10,7 @@ func _ready():
 	SignalManager.connect('initHealth', self, 'initHealth')
 	SignalManager.connect('healthChange', self, 'setCurrentHealth')
 	SignalManager.connect('maxHealthChange', self, 'setMaxHealth')
+	SignalManager.connect('setCointNum', self, 'setCointNum')
 	pass
 
 func setCurrentHealth(health):
@@ -24,3 +26,6 @@ func initHealth(health):
 
 func setMaxHealth(health):
 	heartsEmpty.rect_size.x = health * WIDTH
+
+func setCointNum(value):
+	coinCount.text = "x " + String(value)
