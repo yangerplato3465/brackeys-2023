@@ -6,16 +6,8 @@ enum {
 	DEATH
 }
 # Stats
-export var maxSpeed = 100
-export var rollSpeed = 200
-export var accel = 1500
-export var bulletSpeed = 1000
-export var fireRate = 0.5
-export var damage = 5
-export var maxHealth = 20
-export var health = 0
-export var invincibilityTime = 1
-export var rollCD = 1
+var accel = 1500
+var bulletSpeed = 1000
 
 var velocity = Vector2.ZERO
 var rollVector = Vector2.RIGHT
@@ -36,9 +28,8 @@ onready var hurtbox = $PlayerHurtbox
 var bullet = preload("res://Prefabs/Bullet.tscn")
 
 func _ready():
-	health = maxHealth
 	canControl = true
-	SignalManager.emit_signal("initHealth", health)
+	SignalManager.emit_signal("initHealth", PlayerStats.health)
 	
 func _process(delta):
 	if canControl:
@@ -51,11 +42,11 @@ func _process(delta):
 func fire():
 	muzzleFlash()
 	var bulletInstance = bullet.instance()
-	bulletInstance.setDamage(damage)
+	bulletInstance.setDamage(PlayerStats.damage)
 	get_tree().get_root().add_child(bulletInstance)
 	bulletInstance.global_position = bulletPoint.global_position
 	canFire = false
-	yield(get_tree().create_timer(fireRate), "timeout")
+	yield(get_tree().create_timer(PlayerStats.fireRate), "timeout")
 	canFire = true
 
 func muzzleFlash():
@@ -85,7 +76,7 @@ func moveState(delta):
 	
 	if inputVector != Vector2.ZERO:
 		rollVector = inputVector
-		velocity = velocity.move_toward(inputVector * maxSpeed, accel * delta)
+		velocity = velocity.move_toward(inputVector * PlayerStats.maxSpeed, accel * delta)
 		animationPlayer.play("Run")
 	else:
 		velocity = Vector2.ZERO
@@ -96,11 +87,11 @@ func moveState(delta):
 	if Input.is_action_just_pressed("roll") and canRoll:
 		state = ROLL
 		canRoll = false
-		yield(get_tree().create_timer(rollCD), "timeout")
+		yield(get_tree().create_timer(PlayerStats.rollCD), "timeout")
 		canRoll = true
 
 func rollState(_delta):
-	velocity = rollVector * rollSpeed
+	velocity = rollVector * PlayerStats.rollSpeed
 	animationPlayer.play("Roll")
 	move()
 
@@ -124,17 +115,17 @@ func death():
 func takeDamage():
 	if state == ROLL:
 		return
-	health -= 1
-	if health <= 0:
+	PlayerStats.health -= 1
+	if PlayerStats.health <= 0:
 		canControl = false
 		velocity = Vector2.ZERO
-		SignalManager.emit_signal("healthChange", health)
+		SignalManager.emit_signal("healthChange", PlayerStats.health)
 		animationPlayer.play("Death")
 		return
-	SignalManager.emit_signal("healthChange", health)
+	SignalManager.emit_signal("healthChange", PlayerStats.health)
 	isInvincible = true
 	blinkAnimation.play("Start")
-	yield(get_tree().create_timer(invincibilityTime), "timeout")
+	yield(get_tree().create_timer(PlayerStats.invincibilityTime), "timeout")
 	blinkAnimation.play("Stop")	
 	isInvincible = false
 
