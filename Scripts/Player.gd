@@ -8,6 +8,7 @@ enum {
 # Stats
 var accel = 1500
 var bulletSpeed = 1000
+var rollSpeed = 200
 
 var velocity = Vector2.ZERO
 var rollVector = Vector2.RIGHT
@@ -17,6 +18,7 @@ var isInvincible = false
 var canControl = true
 var canRoll = true
 var gunSmithInRange = false
+var mailInRange = false
 
 onready var animationPlayer = $AnimationPlayer
 onready var sprite = $Sprite
@@ -28,11 +30,14 @@ onready var hurtbox = $PlayerHurtbox
 
 var bullet = preload("res://Prefabs/Bullet.tscn")
 var upgradePanelPrefab = preload("res://Prefabs/UpgradePanel.tscn")
+var mailPrefab = preload("res://Prefabs/MailContent.tscn")
+var mail = null
 var upgradePanel = null
 
 func _ready():
 	canControl = true
 	SignalManager.connect("hideUpgradePanel", self, "hideUpgradePanel")
+	SignalManager.connect("hideMailPanel", self, "hideMail")
 	SignalManager.emit_signal("initHealth", PlayerStats.health)
 	SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)
 	
@@ -45,15 +50,28 @@ func _process(delta):
 			takeDamage()
 		if Input.is_action_pressed("action") and gunSmithInRange:
 			showUpgradePanel()
+		if Input.is_action_pressed("action") and mailInRange:
+			showMail()
+
+func showMail():
+	if mail == null:
+		mail = mailPrefab.instance()
+		get_tree().get_root().get_node("/root/World/CanvasLayer").add_child(mail)
+	else:
+		mail.visible = true
+	canControl = false
+
+func hideMail():
+	mail.visible = false
+	canControl = true
 
 func showUpgradePanel():
-	if(upgradePanel == null):
+	if upgradePanel == null:
 		upgradePanel = upgradePanelPrefab.instance()
 		get_tree().get_root().get_node("/root/World/CanvasLayer").add_child(upgradePanel)
-		canControl = false
 	else:
 		upgradePanel.visible = true
-		canControl = false
+	canControl = false
 
 func hideUpgradePanel():
 	upgradePanel.visible = false
@@ -111,7 +129,7 @@ func moveState(delta):
 		canRoll = true
 
 func rollState(_delta):
-	velocity = rollVector * PlayerStats.rollSpeed
+	velocity = rollVector * rollSpeed
 	animationPlayer.play("Roll")
 	move()
 
@@ -156,8 +174,12 @@ func _on_PlayerCoinHitbox_area_entered(area):
 		SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)
 	elif area.name == Consts.NPC_AREA:
 		gunSmithInRange = true
+	elif area.name == Consts.MAIL_AREA:
+		mailInRange = true
 
 
 func _on_PlayerCoinHitbox_area_exited(area):
 	if area.name == Consts.NPC_AREA:
 		gunSmithInRange = false
+	elif area.name == Consts.MAIL_AREA:
+		mailInRange = false

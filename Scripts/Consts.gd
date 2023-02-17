@@ -5,6 +5,7 @@ const PLAYER = "Player"
 const WALLS = "Walls"
 const COIN_AREA = "CoinArea"
 const NPC_AREA = "NpcArea"
+const MAIL_AREA = "MailArea"
 const PLAYER_COIN_HITBOX = "PlayerCoinHitbox"
 
 var tier1Upgrades = [

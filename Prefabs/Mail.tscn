@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/Mail.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Objects/Map_Map_7.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/UI/E.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 40.0
+
+[node name="Mail" type="Sprite"]
+position = Vector2( 48, 160 )
+texture = ExtResource( 2 )
+script = ExtResource( 1 )
+
+[node name="MailArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MailArea"]
+shape = SubResource( 1 )
+
+[node name="Key" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -16 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 3 )
+
+[connection signal="body_entered" from="MailArea" to="." method="_on_MailArea_body_entered"]
+[connection signal="body_exited" from="MailArea" to="." method="_on_MailArea_body_exited"]
