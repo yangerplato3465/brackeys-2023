@@ -212,3 +212,4 @@ position = Vector2( 2, -5 )
 shape = SubResource( 14 )
 
 [connection signal="area_entered" from="PlayerCoinHitbox" to="." method="_on_PlayerCoinHitbox_area_entered"]
+[connection signal="area_exited" from="PlayerCoinHitbox" to="." method="_on_PlayerCoinHitbox_area_exited"]

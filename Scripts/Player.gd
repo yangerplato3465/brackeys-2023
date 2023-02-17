@@ -16,6 +16,7 @@ var canFire = true
 var isInvincible = false
 var canControl = true
 var canRoll = true
+var gunSmithInRange = false
 
 onready var animationPlayer = $AnimationPlayer
 onready var sprite = $Sprite
@@ -26,10 +27,14 @@ onready var blinkAnimation = $BlinkAnimation
 onready var hurtbox = $PlayerHurtbox
 
 var bullet = preload("res://Prefabs/Bullet.tscn")
+var upgradePanelPrefab = preload("res://Prefabs/UpgradePanel.tscn")
+var upgradePanel = null
 
 func _ready():
 	canControl = true
+	SignalManager.connect("hideUpgradePanel", self, "hideUpgradePanel")
 	SignalManager.emit_signal("initHealth", PlayerStats.health)
+	SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)
 	
 func _process(delta):
 	if canControl:
@@ -38,6 +43,21 @@ func _process(delta):
 			fire()
 		if hurtbox.get_overlapping_areas().size() > 0 and !isInvincible:
 			takeDamage()
+		if Input.is_action_pressed("action") and gunSmithInRange:
+			showUpgradePanel()
+
+func showUpgradePanel():
+	if(upgradePanel == null):
+		upgradePanel = upgradePanelPrefab.instance()
+		get_tree().get_root().get_node("/root/World/CanvasLayer").add_child(upgradePanel)
+		canControl = false
+	else:
+		upgradePanel.visible = true
+		canControl = false
+
+func hideUpgradePanel():
+	upgradePanel.visible = false
+	canControl = true
 
 func fire():
 	muzzleFlash()
@@ -134,3 +154,10 @@ func _on_PlayerCoinHitbox_area_entered(area):
 	if area.name == Consts.COIN_AREA:
 		PlayerStats.coinCount += 1
 		SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)
+	elif area.name == Consts.NPC_AREA:
+		gunSmithInRange = true
+
+
+func _on_PlayerCoinHitbox_area_exited(area):
+	if area.name == Consts.NPC_AREA:
+		gunSmithInRange = false

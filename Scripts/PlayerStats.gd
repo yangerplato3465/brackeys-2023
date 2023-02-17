@@ -35,7 +35,7 @@ var stickyBullet = false
 var berserkerUnlocked = false
 var berserkerActivated = false
 
-var coinCount = 0
+var coinCount = 50
 
 func _ready():
 	pass

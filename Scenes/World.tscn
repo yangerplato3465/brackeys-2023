@@ -5,7 +5,7 @@
 [ext_resource path="res://Prefabs/HealthUI.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprites/Tiles/Dirt.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/Tiles/16 x 16 codename iso game.png" type="Texture" id=5]
-[ext_resource path="res://Prefabs/Slime.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Prefabs/GunSmith.tscn" type="PackedScene" id=6]
 
 [sub_resource type="OccluderPolygon2D" id=8]
 polygon = PoolVector2Array( 16, 32, 0, 32, 0, 0, 16, 0 )
@@ -167,5 +167,5 @@ remote_path = NodePath("../../../Camera2D")
 [node name="Sign" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 128, 64 )
 
-[node name="Slime" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 216, 128 )
+[node name="GunSmith" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 184, 88 )

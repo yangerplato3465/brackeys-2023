@@ -4,6 +4,7 @@ const BULLET_HITBOX = "BulletHitbox"
 const PLAYER = "Player"
 const WALLS = "Walls"
 const COIN_AREA = "CoinArea"
+const NPC_AREA = "NpcArea"
 const PLAYER_COIN_HITBOX = "PlayerCoinHitbox"
 
 var tier1Upgrades = [
