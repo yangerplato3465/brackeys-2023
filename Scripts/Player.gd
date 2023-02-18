@@ -19,6 +19,7 @@ var canControl = true
 var canRoll = true
 var gunSmithInRange = false
 var mailInRange = false
+var chestInRange = false
 
 onready var animationPlayer = $AnimationPlayer
 onready var sprite = $Sprite
@@ -27,6 +28,7 @@ onready var bulletPoint = $Gun/BulletPoint
 onready var muzzleFlash = $Gun/Flash
 onready var blinkAnimation = $BlinkAnimation
 onready var hurtbox = $PlayerHurtbox
+onready var tabView = $CanvasLayer/TabView
 
 var bullet = preload("res://Prefabs/Bullet.tscn")
 var upgradePanelPrefab = preload("res://Prefabs/UpgradePanel.tscn")
@@ -46,12 +48,18 @@ func _process(delta):
 		gunBehavior()
 		if Input.is_action_pressed("fire") and canFire:
 			fire()
+		if Input.is_action_pressed("tab"):
+			tabView.visible = true
+		if Input.is_action_just_released("tab"):
+			tabView.visible = false
 		if hurtbox.get_overlapping_areas().size() > 0 and !isInvincible:
 			takeDamage()
-		if Input.is_action_pressed("action") and gunSmithInRange:
+		if Input.is_action_just_pressed("action") and gunSmithInRange:
 			showUpgradePanel()
-		if Input.is_action_pressed("action") and mailInRange:
+		elif Input.is_action_just_pressed("action") and mailInRange:
 			showMail()
+		elif Input.is_action_just_pressed("action") and chestInRange:
+			print('open chest')
 
 func showMail():
 	if mail == null:
@@ -154,6 +162,9 @@ func takeDamage():
 	if state == ROLL:
 		return
 	PlayerStats.health -= 1
+	if PlayerStats.health == 1 && PlayerStats.berserkerUnlocked:
+		PlayerStats.berserkerActivated = true
+		PlayerStats.damage += 10
 	if PlayerStats.health <= 0:
 		canControl = false
 		velocity = Vector2.ZERO
@@ -176,6 +187,14 @@ func _on_PlayerCoinHitbox_area_entered(area):
 		gunSmithInRange = true
 	elif area.name == Consts.MAIL_AREA:
 		mailInRange = true
+	elif area.name == Consts.CHEST_AREA:
+		chestInRange = true
+	elif area.name == Consts.POTION_AREA:
+		PlayerStats.health += 1
+		SignalManager.emit_signal("healthChange", PlayerStats.health)
+		if PlayerStats.berserkerActivated:
+			PlayerStats.damage -= 10
+			PlayerStats.berserkerActivated = false
 
 
 func _on_PlayerCoinHitbox_area_exited(area):
@@ -183,3 +202,5 @@ func _on_PlayerCoinHitbox_area_exited(area):
 		gunSmithInRange = false
 	elif area.name == Consts.MAIL_AREA:
 		mailInRange = false
+	elif area.name == Consts.CHEST_AREA:
+		chestInRange = false

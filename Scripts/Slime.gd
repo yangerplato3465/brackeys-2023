@@ -12,6 +12,7 @@ onready var playerDetection = $PlayerDetection
 onready var sprite = $Sprite
 
 var coin = preload("res://Prefabs/Coin.tscn")
+var potion = preload("res://Prefabs/Potion.tscn")
 
 var health
 var velocity = Vector2.ZERO
@@ -52,6 +53,8 @@ func _on_HurtBox_area_entered(area):
 	if area.name == Consts.BULLET_HITBOX:
 		health -= area.get_parent().damage
 		blinkAnimation.play("BlinkOnce")
+		if PlayerStats.stickyBullet:
+			maxSpeed = 35
 		if health <= 0:
 			state = IDLE
 			hurtbox.collision_layer = Consts.IGNORE
@@ -60,6 +63,7 @@ func _on_HurtBox_area_entered(area):
 
 func death():
 	spawnCoins()
+	spawnPotion()
 	queue_free()
 
 func spawnCoins():
@@ -68,6 +72,18 @@ func spawnCoins():
 		var coinInstance = coin.instance()
 		get_tree().get_root().add_child(coinInstance)
 		coinInstance.global_position = global_position
+
+func spawnPotion():
+	var shouldSpawn = false
+	if PlayerStats.dropPotionChance <= 0:
+		return
+	else:
+		shouldSpawn = rng.randf() < PlayerStats.dropPotionChance
+	
+	if shouldSpawn:
+		var potionInstance = potion.instance()
+		get_tree().get_root().add_child(potionInstance)
+		potionInstance.global_position = global_position
 
 func _on_PlayerDetection_body_entered(body):
 	if body.name == Consts.PLAYER:

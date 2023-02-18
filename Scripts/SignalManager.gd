@@ -6,5 +6,6 @@ signal maxHealthChange
 signal setCointNum
 signal hideUpgradePanel
 signal hideMailPanel
+signal updateTabView
 
 signal coinToPlayer

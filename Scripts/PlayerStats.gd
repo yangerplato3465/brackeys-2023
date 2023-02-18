@@ -16,6 +16,7 @@ var defaultShopItemCostMultiplier = 1
 var defaultStickyBullet = false
 var defaultBerserkerUnlocked = false
 var defaultBerserkerActivated = false
+var defaultUpgradeArray = []
 
 # Stats
 var enemyMaxCoinDrop = 3
@@ -34,6 +35,7 @@ var shopItemCostMultiplier = 1
 var stickyBullet = false
 var berserkerUnlocked = false
 var berserkerActivated = false
+var upgradeArray = []
 
 var coinCount = 50
 
@@ -57,9 +59,10 @@ func resetAll():
 	stickyBullet = defaultStickyBullet
 	berserkerUnlocked = defaultBerserkerUnlocked
 	berserkerActivated = defaultBerserkerActivated
-	
+
 
 func applyUpgrade(id):
+	upgradeArray.append(id)
 	match id:
 		0:
 			maxHealth += 1
