@@ -252,9 +252,9 @@ patch_margin_bottom = 12
 script = ExtResource( 8 )
 
 [node name="GridContainer" type="GridContainer" parent="CanvasLayer/TabView"]
-margin_left = 154.0
+margin_left = 140.0
 margin_top = 21.0
-margin_right = 222.0
+margin_right = 208.0
 margin_bottom = 129.0
 columns = 5
 

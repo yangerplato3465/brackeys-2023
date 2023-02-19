@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 var rng = RandomNumberGenerator.new()
 var velocity = Vector2.ZERO
-var speed = 100
+var speed = 50
 var friction = 150
 
 func _ready():

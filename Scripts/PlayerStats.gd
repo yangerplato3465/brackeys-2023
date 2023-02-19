@@ -2,14 +2,14 @@ extends Node2D
 # Default Stats
 var defaultEnemyMaxCoinDrop = 3
 var defaultEnemyMinCoinDrop = 2
-var defaultDamage = 5
+var defaultDamage = 5.0
 var defaultMaxHealth = 5
 var defaultHealth = 5
-var defaultMaxSpeed = 100
-var defaultInvincibilityTime = 1
-var defaultRollCD = 1
+var defaultMaxSpeed = 100.0
+var defaultInvincibilityTime = 1.0
+var defaultRollCD = 1.0
 var defaultFireRate = 0.5
-var defaultDropPotionChance = 0
+var defaultDropPotionChance = 0.0
 var defaultHealsEnterNewRoom = 0
 var defaultitemTierUnlocked = 0
 var defaultShopItemCostMultiplier = 1
@@ -21,14 +21,14 @@ var defaultUpgradeArray = []
 # Stats
 var enemyMaxCoinDrop = 3
 var enemyMinCoinDrop = 2
-var damage = 5
+var damage = 5.0
 var maxHealth = 5
 var health = 5
-var maxSpeed = 100
-var invincibilityTime = 1
-var rollCD = 1
+var maxSpeed = 100.0
+var invincibilityTime = 1.0
+var rollCD = 1.0
 var fireRate = 0.5
-var dropPotionChance = 0
+var dropPotionChance = 0.0
 var healsEnterNewRoom = 0
 var itemTierUnlocked = 0
 var shopItemCostMultiplier = 1
@@ -38,6 +38,7 @@ var berserkerActivated = false
 var upgradeArray = []
 
 var coinCount = 0
+var currentLevel = 1
 # For next run
 var coinForNextRun = 0
 var upgradeForNextRun = null
@@ -68,6 +69,7 @@ func resetAll():
 	stickyBullet = defaultStickyBullet
 	berserkerUnlocked = defaultBerserkerUnlocked
 	berserkerActivated = defaultBerserkerActivated
+	currentLevel = 1
 	coinCount = 0
 	SignalManager.emit_signal("setCointNum", coinCount)
 
@@ -87,16 +89,25 @@ func applyUpgrade(id):
 		2:
 			health = maxHealth
 			SignalManager.emit_signal("healthChange", health)
+			if berserkerActivated:
+				damage -= 10
+				berserkerActivated = false
 		3:
 			health += 3
 			if health > maxHealth:
 				health = maxHealth
 			SignalManager.emit_signal("healthChange", health)
+			if berserkerActivated:
+				damage -= 10
+				berserkerActivated = false
 		4:
 			health += 1
 			if health > maxHealth:
 				health = maxHealth
 			SignalManager.emit_signal("healthChange", health)
+			if berserkerActivated:
+				damage -= 10
+				berserkerActivated = false
 		5:
 			dropPotionChance += 0.1
 		6:

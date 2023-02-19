@@ -89,7 +89,7 @@ func hideMail():
 func showUpgradePanel():
 	if upgradePanel == null:
 		upgradePanel = upgradePanelPrefab.instance()
-		get_tree().get_root().get_node("/root/World/CanvasLayer").add_child(upgradePanel)
+		get_tree().get_root().get_node("/root/LevelUpgrade/CanvasLayer").add_child(upgradePanel)
 	else:
 		upgradePanel.visible = true
 	canControl = false
@@ -99,7 +99,7 @@ func hideUpgradePanel():
 	canControl = true
 
 func fire():
-	muzzleFlash()
+	muzzleFlashes()
 	var bulletInstance = bullet.instance()
 	bulletInstance.setDamage(PlayerStats.damage)
 	get_tree().get_root().add_child(bulletInstance)
@@ -108,7 +108,7 @@ func fire():
 	yield(get_tree().create_timer(PlayerStats.fireRate), "timeout")
 	canFire = true
 
-func muzzleFlash():
+func muzzleFlashes():
 	muzzleFlash.visible = true
 	yield(get_tree().create_timer(0.1), "timeout")
 	muzzleFlash.visible = false	
@@ -205,7 +205,8 @@ func _on_PlayerCoinHitbox_area_entered(area):
 	elif area.name == Consts.CHEST_AREA:
 		chestInRange = true
 	elif area.name == Consts.POTION_AREA:
-		PlayerStats.health += 1
+		if PlayerStats.health < PlayerStats.maxHealth:
+			PlayerStats.health += 1
 		SignalManager.emit_signal("healthChange", PlayerStats.health)
 		if PlayerStats.berserkerActivated:
 			PlayerStats.damage -= 10

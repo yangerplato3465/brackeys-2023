@@ -62,7 +62,7 @@ disabled = true
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 11 )
 animation = "spin"
-frame = 5
+frame = 3
 playing = true
 
 [node name="CoinArea" type="Area2D" parent="."]

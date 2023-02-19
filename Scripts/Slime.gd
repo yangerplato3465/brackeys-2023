@@ -1,6 +1,9 @@
 extends KinematicBody2D
 
+export var isKing = false
+
 export var maxHealth = 15
+export var extraCoinDrop = 0
 export var accel = 300
 export var maxSpeed = 50
 export var friction = 300
@@ -64,11 +67,14 @@ func _on_HurtBox_area_entered(area):
 func death():
 	spawnCoins()
 	spawnPotion()
-	queue_free()
+	if isKing:
+		Transition.changeScene()
+	else:
+		queue_free()
 
 func spawnCoins():
 	var coinNum = rng.randi_range(PlayerStats.enemyMinCoinDrop, PlayerStats.enemyMaxCoinDrop)
-	for n in coinNum:
+	for n in coinNum + extraCoinDrop:
 		var coinInstance = coin.instance()
 		get_tree().get_root().add_child(coinInstance)
 		coinInstance.global_position = global_position

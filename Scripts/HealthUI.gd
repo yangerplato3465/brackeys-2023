@@ -21,7 +21,7 @@ func setCurrentHealth(health):
 		hearts.visible = true
 
 func initHealth(health):
-	heartsEmpty.rect_size.x = health * WIDTH
+	heartsEmpty.rect_size.x = PlayerStats.maxHealth * WIDTH
 	hearts.rect_size.x = health * WIDTH
 
 func setMaxHealth(health):

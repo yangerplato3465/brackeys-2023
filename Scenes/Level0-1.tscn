@@ -346,4 +346,4 @@ position = Vector2( 168, 72 )
 
 [node name="Door" parent="YSort" instance=ExtResource( 15 )]
 position = Vector2( 272, 48 )
-targetScene = "res://Scenes/Level1-1.tscn"
+goToUpgrade = false

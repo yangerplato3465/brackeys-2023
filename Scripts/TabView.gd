@@ -13,14 +13,14 @@ func _ready():
 	init()
 
 func init():
-	damage.text = String(PlayerStats.damage)
-	speed.text = String(PlayerStats.maxSpeed)
-	firerate.text = String(1 / PlayerStats.fireRate)
+	damage.text = String(stepify(PlayerStats.damage, 0.01))
+	speed.text = String(stepify(PlayerStats.maxSpeed, 0.01))
+	firerate.text = String(stepify(1 / PlayerStats.fireRate, 0.01))
 
 func updateStats():
-	damage.text = String(PlayerStats.damage)
-	speed.text = String(PlayerStats.maxSpeed)
-	firerate.text = String(1 / PlayerStats.fireRate)
+	damage.text = String(stepify(PlayerStats.damage, 0.01))
+	speed.text = String(stepify(PlayerStats.maxSpeed, 0.01))
+	firerate.text = String(stepify(1 / PlayerStats.fireRate, 0.01))
 
 func addIcon(data):
 	# Potion type upgrades don't need to add icon

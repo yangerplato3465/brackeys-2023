@@ -150,8 +150,13 @@ radius = 184.003
 [sub_resource type="CircleShape2D" id=13]
 radius = 7.0
 
-[node name="Slime" type="KinematicBody2D"]
+[node name="SlimeKing" type="KinematicBody2D"]
+scale = Vector2( 7, 7 )
 script = ExtResource( 2 )
+isKing = true
+maxHealth = 300
+extraCoinDrop = 30
+maxSpeed = 30
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 7 )

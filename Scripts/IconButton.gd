@@ -27,4 +27,4 @@ func _on_IconButton_gui_input(event):
 		PlayerStats.selectLegacyScene.visible = false
 		PlayerStats.upgradeForNextRun = upgradeData
 		PlayerStats.resetAll()
-		Transition.changeScene("res://Scenes/Level0-1.tscn")
+		Transition.startGame()

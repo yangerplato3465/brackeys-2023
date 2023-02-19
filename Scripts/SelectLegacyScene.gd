@@ -25,5 +25,6 @@ func setGold():
 
 
 func _on_Back_pressed():
-	Transition.changeScene("res://Scenes/Level0-1.tscn")
+	PlayerStats.resetAll()
+	Transition.startGame()
 	visible = false

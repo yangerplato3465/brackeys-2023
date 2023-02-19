@@ -1,14 +1,16 @@
 extends Sprite
 
 onready var EKey = $Key
-export(String, FILE) var targetScene
+export(bool) var goToUpgrade = true
 
 var playerInRange = false
 
 func _process(delta):
 	if Input.is_action_just_pressed("action") and playerInRange:
-		if targetScene != null:
-			Transition.changeScene(targetScene)
+		if goToUpgrade:
+			Transition.goToUpgrade()
+		else:
+			Transition.changeScene()
 
 
 func _on_DoorArea_body_entered(body):
