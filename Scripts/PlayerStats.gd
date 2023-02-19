@@ -38,9 +38,17 @@ var berserkerActivated = false
 var upgradeArray = []
 
 var coinCount = 50
+# For next run
+var coinForNextRun = 0
+var upgradeForNextRun = null
+
+onready var selectLegacyScene = $CanvasLayer/SelectLegacyScene
 
 func _ready():
 	pass
+	
+func showSelectLegacyScene():
+	selectLegacyScene.visible = true
 
 func resetAll():
 	enemyMaxCoinDrop = defaultEnemyMaxCoinDrop
@@ -62,7 +70,8 @@ func resetAll():
 
 
 func applyUpgrade(id):
-	upgradeArray.append(id)
+	if id != 2 || id != 3 || id != 4:
+		upgradeArray.append(id)
 	match id:
 		0:
 			maxHealth += 1

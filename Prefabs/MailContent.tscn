@@ -34,13 +34,13 @@ rect_scale = Vector2( 0.5, 0.5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
 text = "To my son:
-You belong to the
-Hunter family, bring
-back the treasure 
-and honor your 
-ancestors!
-PS I left something 
+Bring back the 
+treasure and honor 
+your family!
+I left something 
 for you in the box.
+My END is your
+BEGINNING :)
 
 By Father"
 

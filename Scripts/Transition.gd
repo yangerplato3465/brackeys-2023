@@ -1,10 +1,11 @@
 extends CanvasLayer
 
 onready var animationPlayer = $AnimationPlayer
+onready var rect = $ColorRect
 var targetScene = null
 
 func _ready():
-	pass
+	rect.modulate.a = 0
 
 func changeScene(target):
 	targetScene = target

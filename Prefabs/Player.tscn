@@ -30,6 +30,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "death"
+} ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "Idle"
@@ -180,7 +194,7 @@ material = SubResource( 12 )
 position = Vector2( 0, -6 )
 texture = ExtResource( 2 )
 hframes = 30
-frame = 10
+frame = 29
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 2, 0 )
@@ -218,6 +232,7 @@ position = Vector2( 2, -5 )
 shape = SubResource( 14 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
 
 [node name="TabView" type="NinePatchRect" parent="CanvasLayer"]
 visible = false
@@ -237,10 +252,10 @@ patch_margin_bottom = 12
 script = ExtResource( 8 )
 
 [node name="GridContainer" type="GridContainer" parent="CanvasLayer/TabView"]
-margin_left = 148.0
-margin_top = 22.0
-margin_right = 216.0
-margin_bottom = 130.0
+margin_left = 154.0
+margin_top = 21.0
+margin_right = 222.0
+margin_bottom = 129.0
 columns = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/TabView"]
@@ -249,9 +264,16 @@ margin_top = 34.0
 margin_right = 129.0
 margin_bottom = 110.0
 
-[node name="DamageLabel" type="Label" parent="CanvasLayer/TabView/VBoxContainer"]
+[node name="StatsLabel" type="Label" parent="CanvasLayer/TabView/VBoxContainer"]
 margin_right = 101.0
 margin_bottom = 16.0
+custom_fonts/font = SubResource( 15 )
+text = "Stats"
+
+[node name="DamageLabel" type="Label" parent="CanvasLayer/TabView/VBoxContainer"]
+margin_top = 20.0
+margin_right = 101.0
+margin_bottom = 36.0
 custom_fonts/font = SubResource( 15 )
 text = "Damage:"
 
@@ -263,9 +285,9 @@ custom_fonts/font = SubResource( 15 )
 text = "100"
 
 [node name="SpeedLabel" type="Label" parent="CanvasLayer/TabView/VBoxContainer"]
-margin_top = 20.0
+margin_top = 40.0
 margin_right = 101.0
-margin_bottom = 36.0
+margin_bottom = 56.0
 custom_fonts/font = SubResource( 15 )
 text = "Speed:"
 
@@ -277,9 +299,9 @@ custom_fonts/font = SubResource( 15 )
 text = "100"
 
 [node name="FirerateLabel" type="Label" parent="CanvasLayer/TabView/VBoxContainer"]
-margin_top = 40.0
+margin_top = 60.0
 margin_right = 101.0
-margin_bottom = 56.0
+margin_bottom = 76.0
 custom_fonts/font = SubResource( 15 )
 text = "Fire rate:"
 

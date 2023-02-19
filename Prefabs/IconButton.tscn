@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Sprites/UI/#1 - Transparent Icons.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/IconButton.gd" type="Script" id=2]
+[ext_resource path="res://Prefabs/UpgradeDecription.tscn" type="PackedScene" id=3]
+
+[node name="IconButton" type="PanelContainer"]
+margin_right = 14.0
+margin_bottom = 14.0
+script = ExtResource( 2 )
+
+[node name="IconSprite" type="Sprite" parent="."]
+position = Vector2( 7, 7 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )
+hframes = 16
+vframes = 20
+
+[node name="UpgradeDecription" parent="." instance=ExtResource( 3 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 7.0
+margin_bottom = 7.0
+mouse_filter = 1
+
+[connection signal="gui_input" from="." to="." method="_on_IconButton_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_IconButton_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_IconButton_mouse_exited"]

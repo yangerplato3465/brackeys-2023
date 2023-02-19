@@ -1,15 +1,12 @@
 extends Control
 var rng = RandomNumberGenerator.new()
 
-var option1ID
 var option1Price
-var option1Frame
-var option2ID
+var option1Data
 var option2Price
-var option2Frame
-var option3ID
+var option2Data
 var option3Price
-var option3Frame
+var option3Data
 
 
 onready var option1 = $Option1
@@ -64,22 +61,18 @@ func setOptionData(data, optionNum):
 
 	match optionNum:
 		1:
-			option1ID = data.id
 			option1Price = price
-			option1Frame = data.frame
-			print(option1Frame)
+			option1Data = data
 			if PlayerStats.coinCount < option1Price:
 				priceLabel.modulate = Color.red
 		2:
-			option2ID = data.id
 			option2Price = price
-			option2Frame = data.frame			
+			option2Data = data
 			if PlayerStats.coinCount < option2Price:
 				priceLabel.modulate = Color.red
 		3:
-			option3ID = data.id
 			option3Price = price
-			option3Frame = data.frame
+			option3Data = data
 			if PlayerStats.coinCount < option3Price:
 				priceLabel.modulate = Color.red
 	if PlayerStats.coinCount < 10:
@@ -132,8 +125,9 @@ func _on_Option1_gui_input(event):
 			return
 		PlayerStats.coinCount -= option1Price
 		SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)
-		SignalManager.emit_signal("updateTabView", option1Frame)
-		PlayerStats.applyUpgrade(option1ID)
+		SignalManager.emit_signal("updateTabView", option1Data)
+		SignalManager.emit_signal("updateSelectView", option1Data)
+		PlayerStats.applyUpgrade(option1Data.id)
 		option1.visible = false
 
 
@@ -144,8 +138,9 @@ func _on_Option2_gui_input(event):
 			return
 		PlayerStats.coinCount -= option2Price
 		SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)
-		SignalManager.emit_signal("updateTabView", option2Frame)
-		PlayerStats.applyUpgrade(option2ID)
+		SignalManager.emit_signal("updateTabView", option2Data)
+		SignalManager.emit_signal("updateSelectView", option2Data)
+		PlayerStats.applyUpgrade(option2Data.id)
 		option2.visible = false
 
 
@@ -156,6 +151,7 @@ func _on_Option3_gui_input(event):
 			return
 		PlayerStats.coinCount -= option3Price
 		SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)
-		SignalManager.emit_signal("updateTabView", option3Frame)
-		PlayerStats.applyUpgrade(option3ID)
+		SignalManager.emit_signal("updateTabView", option3Data)
+		SignalManager.emit_signal("updateSelectView", option3Data)
+		PlayerStats.applyUpgrade(option3Data.id)
 		option3.visible = false

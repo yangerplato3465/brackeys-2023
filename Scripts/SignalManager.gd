@@ -7,5 +7,7 @@ signal setCointNum
 signal hideUpgradePanel
 signal hideMailPanel
 signal updateTabView
+signal updateSelectView
+signal setLegacyGold
 
 signal coinToPlayer

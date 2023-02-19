@@ -16,8 +16,11 @@ func init():
 	speed.text = String(PlayerStats.maxSpeed)
 	firerate.text = String(1 / PlayerStats.fireRate)
 
-func addIcon(frame):
+func addIcon(data):
+	# Potion type upgrades don't need to add icon
+	if data.frame == 152 || data.frame == 156 || data.frame == 144:
+		return
 	var iconInstance = icon.instance()
-	iconInstance.setIconFrame(frame)
+	iconInstance.setIconFrame(data.frame)
 	container.add_child(iconInstance)
 	

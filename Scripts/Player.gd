@@ -156,6 +156,8 @@ func gunBehavior():
 		gun.scale.y = -1
 
 func death():
+	SignalManager.emit_signal("setLegacyGold")
+	PlayerStats.showSelectLegacyScene()
 	queue_free()
 
 func takeDamage():
