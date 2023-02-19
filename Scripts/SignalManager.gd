@@ -10,5 +10,6 @@ signal updateTabView
 signal updateSelectView
 signal setLegacyGold
 signal updateTabViewStats
+signal screenShake
 
 signal coinToPlayer

@@ -1,12 +1,17 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/player.png" type="Texture" id=2]
 [ext_resource path="res://Prefabs/Gun.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Shaders/White.tres" type="Shader" id=4]
+[ext_resource path="res://Audio/footstep_carpet_003.ogg" type="AudioStream" id=5]
 [ext_resource path="res://Sprites/UI/tab_screen.png" type="Texture" id=6]
 [ext_resource path="res://Sprites/equipment-pro-v1.1/EquipmentPro.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://Scripts/TabView.gd" type="Script" id=8]
+[ext_resource path="res://Audio/footstep_snow_000.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Audio/impactMining_001.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Audio/handleCoins2.ogg" type="AudioStream" id=11]
+[ext_resource path="res://Audio/footstep_carpet_002.ogg" type="AudioStream" id=12]
 
 [sub_resource type="ShaderMaterial" id=12]
 shader = ExtResource( 4 )
@@ -311,6 +316,26 @@ margin_right = 103.0
 margin_bottom = 16.0
 custom_fonts/font = SubResource( 15 )
 text = "100"
+
+[node name="FireAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -10.0
+
+[node name="FootStepAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = -15.0
+
+[node name="MoneyAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -15.0
+
+[node name="CoinAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -15.0
+
+[node name="HurtAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -5.0
 
 [connection signal="area_entered" from="PlayerCoinHitbox" to="." method="_on_PlayerCoinHitbox_area_entered"]
 [connection signal="area_exited" from="PlayerCoinHitbox" to="." method="_on_PlayerCoinHitbox_area_exited"]

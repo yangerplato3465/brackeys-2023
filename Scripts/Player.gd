@@ -21,6 +21,7 @@ var gunSmithInRange = false
 var mailInRange = false
 var chestInRange = false
 var chestOpened = false
+var footstep = true
 
 onready var animationPlayer = $AnimationPlayer
 onready var sprite = $Sprite
@@ -60,6 +61,7 @@ func _process(delta):
 		elif Input.is_action_just_pressed("action") and mailInRange:
 			showMail()
 		elif Input.is_action_just_pressed("action") and chestInRange and !chestOpened:
+			$MoneyAudio.play()
 			chestOpened = true
 			if PlayerStats.firstRun:
 				PlayerStats.firstRun = false
@@ -99,6 +101,7 @@ func hideUpgradePanel():
 	canControl = true
 
 func fire():
+	$FireAudio.play()
 	muzzleFlashes()
 	var bulletInstance = bullet.instance()
 	bulletInstance.setDamage(PlayerStats.damage)
@@ -137,9 +140,15 @@ func moveState(delta):
 		rollVector = inputVector
 		velocity = velocity.move_toward(inputVector * PlayerStats.maxSpeed, accel * delta)
 		animationPlayer.play("Run")
+		if footstep:
+			$FootStepAudio.play()
+			footstep = false
+			yield(get_tree().create_timer(0.4), "timeout")
+			footstep = true
 	else:
 		velocity = Vector2.ZERO
 		animationPlayer.play("Idle")
+		$FootStepAudio.stop()
 	
 	move()
 	
@@ -176,6 +185,8 @@ func death():
 func takeDamage():
 	if state == ROLL:
 		return
+	$HurtAudio.play()
+	SignalManager.emit_signal("screenShake", 10)
 	PlayerStats.health -= 1
 	if PlayerStats.health == 1 && PlayerStats.berserkerUnlocked:
 		PlayerStats.berserkerActivated = true
@@ -196,6 +207,7 @@ func takeDamage():
 
 func _on_PlayerCoinHitbox_area_entered(area):
 	if area.name == Consts.COIN_AREA:
+		$CoinAudio.play()
 		PlayerStats.coinCount += 1
 		SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)
 	elif area.name == Consts.NPC_AREA:

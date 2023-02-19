@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Sprites/Enemies/green_slime.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Slime.gd" type="Script" id=2]
 [ext_resource path="res://Shaders/White.tres" type="Shader" id=3]
+[ext_resource path="res://Audio/footstep_grass_004.ogg" type="AudioStream" id=4]
 
 [sub_resource type="ShaderMaterial" id=7]
 resource_local_to_scene = true
@@ -199,6 +200,9 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SlimeHitbox"]
 position = Vector2( -1, 1 )
 shape = SubResource( 13 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="body_entered" from="PlayerDetection" to="." method="_on_PlayerDetection_body_entered"]

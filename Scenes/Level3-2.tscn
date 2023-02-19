@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Prefabs/HealthUI.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Prefabs/Door.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Prefabs/SlimePurple.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Prefabs/Bat.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scripts/Camera.gd" type="Script" id=9]
 
 [sub_resource type="OccluderPolygon2D" id=8]
 polygon = PoolVector2Array( 16, 32, 0, 32, 0, 0, 16, 0 )
@@ -148,6 +149,7 @@ limit_right = 800
 limit_bottom = 460
 smoothing_enabled = true
 editor_draw_limits = true
+script = ExtResource( 9 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

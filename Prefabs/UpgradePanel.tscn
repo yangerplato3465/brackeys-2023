@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Sprites/UI/#1 - Transparent Icons.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/UI/upgrade_bg.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/equipment-pro-v1.1/EquipmentPro.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Scripts/UpgradePanel.gd" type="Script" id=4]
 [ext_resource path="res://Sprites/UI/button_bg.png" type="Texture" id=5]
+[ext_resource path="res://Audio/bookFlip2.ogg" type="AudioStream" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 3 )
@@ -214,6 +215,9 @@ rect_scale = Vector2( 0.6, 0.6 )
 custom_fonts/font = SubResource( 3 )
 text = "Back"
 align = 1
+
+[node name="clickAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
 
 [connection signal="gui_input" from="Option1" to="." method="_on_Option1_gui_input"]
 [connection signal="gui_input" from="Option2" to="." method="_on_Option2_gui_input"]

@@ -88,6 +88,7 @@ func setOptionData(data, optionNum):
 		rerollText.modulate = Color.white
 				
 func checkEnoughGold():
+	$clickAudio.play()
 	for n in range(1, 4):
 		var priceLabel = get_node("Option" + String(n) + "/Price")
 		match n:

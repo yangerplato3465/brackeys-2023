@@ -32,6 +32,7 @@ enum {
 func _ready():
 	rng.randomize()
 	health = maxHealth
+	$AudioStreamPlayer.volume_db = -10
 	
 func _physics_process(delta):
 	match state:
@@ -54,6 +55,7 @@ func seekPlayer():
 
 func _on_HurtBox_area_entered(area):
 	if area.name == Consts.BULLET_HITBOX:
+		$AudioStreamPlayer.play()
 		health -= area.get_parent().damage
 		blinkAnimation.play("BlinkOnce")
 		if PlayerStats.stickyBullet:

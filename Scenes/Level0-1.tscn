@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Tiles/outdoor tilemap.png" type="Texture" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Sprites/UI/left_click.png" type="Texture" id=13]
 [ext_resource path="res://Prefabs/Chest.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Prefabs/Door.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scripts/Camera.gd" type="Script" id=16]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 48, 64, 0, 64, 0, 0, 48, 0 )
@@ -318,6 +319,7 @@ limit_right = 320
 limit_bottom = 180
 smoothing_enabled = true
 editor_draw_limits = true
+script = ExtResource( 16 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
