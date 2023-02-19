@@ -70,6 +70,7 @@ func resetAll():
 
 
 func applyUpgrade(id):
+	SignalManager.emit_signal("updateTabViewStats")
 	if id != 2 || id != 3 || id != 4:
 		upgradeArray.append(id)
 	match id:

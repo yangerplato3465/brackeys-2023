@@ -9,9 +9,15 @@ var icon = preload("res://Prefabs/Icon.tscn")
 
 func _ready():
 	SignalManager.connect("updateTabView", self, "addIcon")
+	SignalManager.connect("updateTabViewStats", self, "updateStats")
 	init()
 
 func init():
+	damage.text = String(PlayerStats.damage)
+	speed.text = String(PlayerStats.maxSpeed)
+	firerate.text = String(1 / PlayerStats.fireRate)
+
+func updateStats():
 	damage.text = String(PlayerStats.damage)
 	speed.text = String(PlayerStats.maxSpeed)
 	firerate.text = String(1 / PlayerStats.fireRate)
@@ -21,6 +27,6 @@ func addIcon(data):
 	if data.frame == 152 || data.frame == 156 || data.frame == 144:
 		return
 	var iconInstance = icon.instance()
-	iconInstance.setIconFrame(data.frame)
+	iconInstance.setIconFrame(data)
 	container.add_child(iconInstance)
 	

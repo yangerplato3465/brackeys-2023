@@ -5,7 +5,7 @@ onready var rect = $ColorRect
 var targetScene = null
 
 func _ready():
-	rect.modulate.a = 0
+	pass
 
 func changeScene(target):
 	targetScene = target

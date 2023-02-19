@@ -9,5 +9,6 @@ signal hideMailPanel
 signal updateTabView
 signal updateSelectView
 signal setLegacyGold
+signal updateTabViewStats
 
 signal coinToPlayer

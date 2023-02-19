@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Sprites/equipment-pro-v1.1/EquipmentPro.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Scripts/Menu.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/UI/button_bg.png" type="Texture" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 1 )
+
+[node name="Menu" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.431373, 0.270588, 0.333333, 1 )
+
+[node name="Start" type="TextureButton" parent="CanvasLayer"]
+margin_left = 128.0
+margin_top = 136.0
+margin_right = 193.0
+margin_bottom = 169.0
+texture_normal = ExtResource( 3 )
+expand = true
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="CanvasLayer/Start"]
+margin_left = 14.0
+margin_top = 11.0
+margin_right = 76.0
+margin_bottom = 27.0
+rect_scale = Vector2( 0.6, 0.6 )
+custom_fonts/font = SubResource( 1 )
+text = "Start"
+align = 1
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+margin_left = 64.0
+margin_top = 16.0
+margin_right = 254.0
+margin_bottom = 48.0
+custom_fonts/font = SubResource( 2 )
+text = "Hunter's Legacy"
+
+[node name="Label2" type="Label" parent="CanvasLayer"]
+margin_left = 40.0
+margin_top = 64.0
+margin_right = 344.0
+margin_bottom = 137.0
+rect_scale = Vector2( 0.8, 0.8 )
+custom_fonts/font = SubResource( 3 )
+text = "Back story: You are a member of a treasure hunting family, when you die, you'll leave a upgrade and gold as a gift to your child for he's next run. A father's end is his child's beginning."
+align = 1
+autowrap = true
+
+[connection signal="pressed" from="CanvasLayer/Start" to="." method="_on_Start_pressed"]
