@@ -69,16 +69,17 @@ func resetAll():
 	stickyBullet = defaultStickyBullet
 	berserkerUnlocked = defaultBerserkerUnlocked
 	berserkerActivated = defaultBerserkerActivated
+	upgradeArray = []
 	currentLevel = 1
 	coinCount = 0
 	SignalManager.emit_signal("setCointNum", coinCount)
 
 
-func applyUpgrade(id):
+func applyUpgrade(data):
 	SignalManager.emit_signal("updateTabViewStats")
-	if id != 2 || id != 3 || id != 4:
-		upgradeArray.append(id)
-	match id:
+	if data.id != 2 || data.id != 3 || data.id != 4:
+		upgradeArray.append(data)
+	match data.id:
 		0:
 			maxHealth += 1
 			health += 1

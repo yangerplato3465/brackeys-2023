@@ -135,7 +135,7 @@ func _on_Option1_gui_input(event):
 		SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)
 		SignalManager.emit_signal("updateTabView", option1Data)
 		SignalManager.emit_signal("updateSelectView", option1Data)
-		PlayerStats.applyUpgrade(option1Data.id)
+		PlayerStats.applyUpgrade(option1Data)
 		option1.visible = false
 		option1Bought = true
 		if option2Bought && option3Bought:
@@ -151,7 +151,7 @@ func _on_Option2_gui_input(event):
 		SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)
 		SignalManager.emit_signal("updateTabView", option2Data)
 		SignalManager.emit_signal("updateSelectView", option2Data)
-		PlayerStats.applyUpgrade(option2Data.id)
+		PlayerStats.applyUpgrade(option2Data)
 		option2.visible = false
 		option2Bought = true
 		if option1Bought && option3Bought:
@@ -167,7 +167,7 @@ func _on_Option3_gui_input(event):
 		SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)
 		SignalManager.emit_signal("updateTabView", option3Data)
 		SignalManager.emit_signal("updateSelectView", option3Data)
-		PlayerStats.applyUpgrade(option3Data.id)
+		PlayerStats.applyUpgrade(option3Data)
 		option3.visible = false
 		option3Bought = true
 		if option2Bought && option1Bought:

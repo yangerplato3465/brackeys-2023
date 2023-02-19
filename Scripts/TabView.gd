@@ -16,6 +16,8 @@ func init():
 	damage.text = String(stepify(PlayerStats.damage, 0.01))
 	speed.text = String(stepify(PlayerStats.maxSpeed, 0.01))
 	firerate.text = String(stepify(1 / PlayerStats.fireRate, 0.01))
+	for n in PlayerStats.upgradeArray.size():
+		addIcon(PlayerStats.upgradeArray[n])
 
 func updateStats():
 	damage.text = String(stepify(PlayerStats.damage, 0.01))

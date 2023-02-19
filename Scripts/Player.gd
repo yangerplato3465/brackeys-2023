@@ -74,7 +74,7 @@ func _process(delta):
 			if PlayerStats.upgradeForNextRun != null:
 				SignalManager.emit_signal("updateTabView", PlayerStats.upgradeForNextRun)
 				SignalManager.emit_signal("updateSelectView", PlayerStats.upgradeForNextRun)
-				PlayerStats.applyUpgrade(PlayerStats.upgradeForNextRun.id)
+				PlayerStats.applyUpgrade(PlayerStats.upgradeForNextRun)
 
 func showMail():
 	if mail == null:

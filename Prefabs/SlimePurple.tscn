@@ -153,7 +153,7 @@ radius = 7.0
 
 [node name="SlimePurple" type="KinematicBody2D"]
 script = ExtResource( 2 )
-maxHealth = 28
+maxHealth = 30
 extraCoinDrop = 3
 
 [node name="Sprite" type="Sprite" parent="."]

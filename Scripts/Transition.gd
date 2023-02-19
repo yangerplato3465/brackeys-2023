@@ -30,6 +30,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 			if PlayerStats.currentLevel == 4:
 				get_tree().change_scene("res://Scenes/Level4-1.tscn")
 				animationPlayer.play("FadeOut")
+				PlayerStats.currentLevel += 1
 				return
 			elif PlayerStats.currentLevel == 5:
 				get_tree().change_scene("res://Scenes/LevelEnding.tscn")

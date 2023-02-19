@@ -56,7 +56,7 @@ shape = SubResource( 1 )
 
 [node name="Key" type="Sprite" parent="."]
 visible = false
-position = Vector2( 0, -24 )
+position = Vector2( -24, 0 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 3 )
 
