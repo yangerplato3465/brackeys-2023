@@ -24,4 +24,7 @@ func _on_IconButton_mouse_entered():
 
 func _on_IconButton_gui_input(event):
 	if event is InputEventMouseButton && event.is_pressed() && event.button_index == BUTTON_LEFT:
+		PlayerStats.selectLegacyScene.visible = false
 		PlayerStats.upgradeForNextRun = upgradeData
+		PlayerStats.resetAll()
+		Transition.changeScene("res://Scenes/Level0-1.tscn")

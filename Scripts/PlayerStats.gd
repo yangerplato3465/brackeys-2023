@@ -37,10 +37,11 @@ var berserkerUnlocked = false
 var berserkerActivated = false
 var upgradeArray = []
 
-var coinCount = 50
+var coinCount = 0
 # For next run
 var coinForNextRun = 0
 var upgradeForNextRun = null
+var firstRun = true
 
 onready var selectLegacyScene = $CanvasLayer/SelectLegacyScene
 
@@ -67,6 +68,8 @@ func resetAll():
 	stickyBullet = defaultStickyBullet
 	berserkerUnlocked = defaultBerserkerUnlocked
 	berserkerActivated = defaultBerserkerActivated
+	coinCount = 0
+	SignalManager.emit_signal("setCointNum", coinCount)
 
 
 func applyUpgrade(id):

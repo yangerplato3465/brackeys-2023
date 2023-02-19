@@ -20,6 +20,7 @@ var canRoll = true
 var gunSmithInRange = false
 var mailInRange = false
 var chestInRange = false
+var chestOpened = false
 
 onready var animationPlayer = $AnimationPlayer
 onready var sprite = $Sprite
@@ -58,8 +59,20 @@ func _process(delta):
 			showUpgradePanel()
 		elif Input.is_action_just_pressed("action") and mailInRange:
 			showMail()
-		elif Input.is_action_just_pressed("action") and chestInRange:
-			print('open chest')
+		elif Input.is_action_just_pressed("action") and chestInRange and !chestOpened:
+			chestOpened = true
+			if PlayerStats.firstRun:
+				PlayerStats.firstRun = false
+				PlayerStats.coinCount += 10
+				SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)
+			else:
+				PlayerStats.coinCount += PlayerStats.coinForNextRun
+				SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)
+			SignalManager.emit_signal("setCointNum", PlayerStats.coinCount)
+			if PlayerStats.upgradeForNextRun != null:
+				SignalManager.emit_signal("updateTabView", PlayerStats.upgradeForNextRun)
+				SignalManager.emit_signal("updateSelectView", PlayerStats.upgradeForNextRun)
+				PlayerStats.applyUpgrade(PlayerStats.upgradeForNextRun.id)
 
 func showMail():
 	if mail == null:

@@ -25,4 +25,5 @@ func setGold():
 
 
 func _on_Back_pressed():
-	pass
+	Transition.changeScene("res://Scenes/Level0-1.tscn")
+	visible = false
